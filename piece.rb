@@ -70,7 +70,7 @@ class Rook < SlidingPiece
   end
 
   def to_s
-    self.color == :black ? "\u265C".brown : "\u2656".gray
+    self.color == :black ? "\u265C".colorize(:black) : "\u2656".colorize(:white)
   end
 end
 
@@ -80,7 +80,7 @@ class Bishop < SlidingPiece
   end
 
   def to_s
-    self.color == :black ? "\u265D".brown : "\u2657".gray
+    self.color == :black ? "\u265D".colorize(:black) : "\u2657".colorize(:white)
   end
 end
 
@@ -90,7 +90,7 @@ class Queen < SlidingPiece
   end
 
   def to_s
-    self.color == :black ? "\u265B".brown : "\u2655".gray
+    self.color == :black ? "\u265B".colorize(:black) : "\u2655".colorize(:white)
   end
 end
 
@@ -137,7 +137,8 @@ class King < SteppingPiece
   end
 
   def to_s
-    self.color == :black ? "\u265A".brown : "\u2654".gray
+    self.color == :black ? "\u265A".colorize(color: :black, bold: 1) :
+    "\u2654".colorize(color: :white, bold: 1)
   end
 end
 
@@ -148,7 +149,7 @@ class Knight < SteppingPiece
   end
 
   def to_s
-    self.color == :black ? "\u265E".brown : "\u2658".gray
+    self.color == :black ? "\u265E".colorize(:black) : "\u2658".colorize(:white)
   end
 end
 
@@ -220,6 +221,6 @@ class Pawn < Piece
   end
 
   def to_s
-    self.color == :black ? "\u265F".brown : "\u2659".gray
+    self.color == :black ? "\u265F".colorize(:black) : "\u2659".colorize(:white)
   end
 end

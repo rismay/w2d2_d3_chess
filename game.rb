@@ -1,7 +1,10 @@
+require 'yaml'
+require 'colorize'
+
 require './board'
 require './piece'
 require './string'
-require 'yaml'
+
 
 class Game
   attr_accessor :board, :players
@@ -34,22 +37,29 @@ class Game
       # rescue InvalidMoveError in here
     end until game_over?(current_player, ending_pos)
 
-    render
     display_end_game_message
   end
 
   def display_end_game_message
+    render
     puts "Checkmate"
   end
 
   def render
-     # system('clear')
+    system('clear')
+    colors = [:light_yellow, :light_black]
 
-    puts " #{(0..7).to_a.join(' ')}"
     self.board.grid.each_with_index do |row, idx|
-      puts "#{idx}#{row.join(' ')}"
+      row_colors = colors.reverse!.cycle
+
+      current_row = row.map do |tile|
+        color = row_colors.next
+
+        "#{tile} ".colorize(background: color)
+      end
+
+      puts current_row.join
     end
-    puts
   end
 
   def prompt_user(color)
@@ -62,6 +72,11 @@ class Game
       start_pos = command.map(&:to_i)
 
       start_piece = self.board[start_pos]
+
+      if start_piece.nil?
+        puts "There's no piece there, asshole. Don't break the system."
+        next
+      end
 
       if start_piece.color != color
         puts "That piece is not yours."
